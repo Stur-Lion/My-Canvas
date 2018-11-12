@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <style>
+    canvas {
+      border: 1px solid #b3b3b3;
+      display: block;
+      margin: 100px auto;
+    }
+  </style>
+</head>
+<body>
+<canvas id="canvas" width="300" height="200">
+  <p>你的浏览器不支持Canvas</p>
+</canvas>
+</body>
+</html>
+
+<script>
+  var canvas = document.getElementById('canvas')
+  if (canvas.getContext) {
+    console.log('支持');
+  } else {
+    console.log('不支持');
+  }
+  var ctx = canvas.getContext('2d')
+  console.log(ctx);
+  ctx.clearRect(0, 0, 200, 200)
+  ctx.fillStyle = '#f6f6f6'
+  ctx.fillRect(10, 10, 130, 130); // 把(10,10)位置大小为130x130的矩形涂色
+
+  // 利用Path绘制复杂路径:
+  var path=new Path2D();
+  path.arc(75, 75, 50, 0, Math.PI*2, true);
+  ctx.strokeStyle = '#3dff75';
+  path.moveTo(110,75);
+  path.arc(75, 75, 35, 0, Math.PI, false);
+  path.moveTo(65, 65);
+  path.arc(60, 65, 5, 0, Math.PI*2, true);
+  path.moveTo(95, 65);
+  path.arc(90, 65, 5, 0, Math.PI*2, true);
+  ctx.strokeStyle = '#0000ff';
+  ctx.stroke(path);
+</script>
