@@ -7,40 +7,78 @@
     canvas {
       border: 1px solid #b3b3b3;
       display: block;
-      margin: 100px auto;
+      margin: 20px auto;
     }
   </style>
+  <script src="http://img1.money.126.net/data/hs/kline/day/history/2015/0000001.json?1542076609345"></script>
 </head>
 <body>
-<canvas id="canvas" width="300" height="200">
+<canvas id="canvasOne" width="400" height="200">
+  <p>你的浏览器不支持Canvas</p>
+</canvas>
+<canvas id="canvasTwo" width="400" height="200">
   <p>你的浏览器不支持Canvas</p>
 </canvas>
 </body>
 </html>
 
 <script>
-  var canvas = document.getElementById('canvas')
-  if (canvas.getContext) {
+  var canvasOne = document.getElementById('canvasOne')
+  if (canvasOne.getContext) {
     console.log('支持');
   } else {
     console.log('不支持');
   }
-  var ctx = canvas.getContext('2d')
+  var ctx = canvasOne.getContext('2d')
   console.log(ctx);
   ctx.clearRect(0, 0, 200, 200)
   ctx.fillStyle = '#f6f6f6'
   ctx.fillRect(10, 10, 130, 130); // 把(10,10)位置大小为130x130的矩形涂色
-
   // 利用Path绘制复杂路径:
-  var path=new Path2D();
-  path.arc(75, 75, 50, 0, Math.PI*2, true);
+  var path = new Path2D();
+  path.arc(75, 75, 50, 0, Math.PI * 2, true);
+  path.moveTo(110, 75);
   ctx.strokeStyle = '#3dff75';
-  path.moveTo(110,75);
   path.arc(75, 75, 35, 0, Math.PI, false);
   path.moveTo(65, 65);
-  path.arc(60, 65, 5, 0, Math.PI*2, true);
+  path.arc(60, 65, 5, 0, Math.PI * 2, true);
   path.moveTo(95, 65);
-  path.arc(90, 65, 5, 0, Math.PI*2, true);
+  path.arc(90, 65, 5, 0, Math.PI * 2, true);
   ctx.strokeStyle = '#0000ff';
   ctx.stroke(path);
+  ctx.shadowOffsetX = 2
+  ctx.shadowOffsetY = 2
+  ctx.shadowBlur = 2;
+  ctx.shadowColor = '#666'
+  ctx.font = '24px 微软雅黑'
+  ctx.fillStyle = '#333'
+  ctx.fillText('测试文字', 150, 50)
+</script>
+<script>
+  'use strict';
+  window.loadStockData = function(r) {
+    var NUMS = 30, data = r.data;
+    if (data.length > NUMS) {
+      data = data.slice(data.length - NUMS);
+    }
+    data = data.map(function (x) {
+      return {
+        date: x[0],
+        open: x[1],
+        close: x[2],
+        high: x[3],
+        low: x[4],
+        vol: x[5],
+        change: x[6]
+      };
+    });
+    drawStock(data)
+  }
+  function drawStock(data) {
+    var canvasTwo = document.getElementById('canvasTwo')
+    var ctxTwo = canvasTwo.getContext('2d')
+    var width = canvasTwo.width, height = canvasTwo.height;
+    ctxTwo.clearRect(0, 0, width, height);
+    ctxTwo.fillText('Test Canvas', 10, 10);
+  };
 </script>
