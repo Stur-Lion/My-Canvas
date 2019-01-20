@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <style>
+    div {
+      font-weight: 900;
+      font-family: '微软雅黑';
+      font-size: 24px;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+<div>这是一个案例</div>
+<canvas id="canvas" style="width: 1000px;height: 600px"></canvas>
+</body>
+</html>
+<script>
+  var canvas = document.getElementById('canvas')
+  var ctx = canvas.getContext('2d')
+  var ratio = getRatio(ctx)
+
+  canvas.width = parseInt(canvas.style.width) * ratio;
+  canvas.height = parseInt(canvas.style.height) * ratio;
+  canvas.style.width = parseInt(canvas.style.width);
+  canvas.style.height = parseInt(canvas.style.height);
+  ctx.scale(ratio,ratio);
+
+  ctx.font = '900 24px 微软雅黑';
+  ctx.fillStyle = '#333';
+  ctx.fillText("这是一个案例", 0, 20);
+
+  function getRatio(context) {
+    var devicePixelRatio = window.devicePixelRatio || 1
+    var backingStoreRatio = context.webkitBackingStorePixelRatio || 1
+    return devicePixelRatio / backingStoreRatio;
+  }
+</script>
